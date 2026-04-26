@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Pay</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+
+    .card {
+      background: #111827;
+      padding: 25px;
+      border-radius: 16px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      color: #22c55e;
+    }
+
+    img {
+      width: 170px;
+      border-radius: 12px;
+      margin: 10px 0;
+    }
+
+    .amount {
+      font-size: 22px;
+      margin: 10px 0;
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 10px;
+      color: #38bdf8;
+    }
+
+    .success {
+      display: none;
+      margin-top: 10px;
+      color: lightgreen;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h2>Google Pay 💳</h2>
+
+  <img src="qr.png" alt="QR Code">
+
+  <!-- AUTO AMOUNT -->
+  <div class="amount" id="amount">₹ 0</div>
+
+  <button onclick="payNow()">Pay Now</button>
+
+  <div class="loading" id="loading">Processing Payment...</div>
+  <div class="success" id="success">Payment Successful 🎉</div>
+
+</div>
+
+<script>
+
+// GET AMOUNT FROM CONFIRM PAGE
+let amt = localStorage.getItem("finalAmount");
+
+if (!amt || amt == 0) {
+  document.getElementById("amount").innerText = "₹ 0";
+} else {
+  document.getElementById("amount").innerText = "₹ " + amt;
+}
+
+function payNow() {
+
+  if (!amt || amt == 0) {
+    alert("No amount found!");
+    return;
+  }
+
+  document.getElementById("loading").style.display = "block";
+
+  setTimeout(() => {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("success").style.display = "block";
+
+    setTimeout(() => {
+      window.location.href = "rating.html";
+    }, 1200);
+
+  }, 1500);
+}
+
+</script>
+
+</body>
+</html>

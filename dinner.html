@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dinner Menu</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(to right, #1e1e2f, #2c3e50);
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .menu-box {
+      width: 50%;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: orange;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      display: grid;
+      grid-template-columns: 1fr 80px 80px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .price {
+      text-align: center;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+      text-align: center;
+    }
+
+    .actions {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background: orange;
+      color: white;
+      cursor: pointer;
+    }
+
+    #summaryBox {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Dinner Menu 🍽️</h1>
+
+<div class="container">
+
+  <!-- DINNER -->
+  <div class="menu-box">
+    <h2>DINNER</h2>
+    <ul>
+      <li><label><input type="checkbox" data-price="15"> Idli</label><span class="price">Rs.15</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="45"> Dosai</label><span class="price">Rs.45</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="30"> Poori</label><span class="price">Rs.30</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="50"> Chapathi</label><span class="price">Rs.50</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="20"> Parotta</label><span class="price">Rs.20</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="55"> Chilli Parotta</label><span class="price">Rs.55</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="40"> Kothu Parotta</label><span class="price">Rs.40</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="30"> Naan</label><span class="price">Rs.30</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="35"> Noodles</label><span class="price">Rs.35</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="30"> Oothapam</label><span class="price">Rs.30</span><input type="number" value="1"></li>
+    </ul>
+  </div>
+
+  <!-- DESSERT -->
+  <div class="menu-box">
+    <h2>DESSERT</h2>
+    <ul>
+      <li><label><input type="checkbox" data-price="10"> Cup Ice</label><span class="price">Rs.10</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="30"> Cone Ice</label><span class="price">Rs.30</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="120"> Falooda</label><span class="price">Rs.120</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="80"> Cassata</label><span class="price">Rs.80</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="60"> Gulab Jamun</label><span class="price">Rs.60</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="35"> Rose Milk</label><span class="price">Rs.35</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="55"> Carrot Halwa</label><span class="price">Rs.55</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="25"> Brownie Icecream</label><span class="price">Rs.25</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="10"> Ball Ice</label><span class="price">Rs.10</span><input type="number" value="1"></li>
+      <li><label><input type="checkbox" data-price="100"> Kulfi King</label><span class="price">Rs.100</span><input type="number" value="1"></li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ACTION BUTTONS -->
+<div class="actions">
+  <button onclick="placeOrder()">Order Now</button>
+  <button onclick="location.reload()">Clear</button>
+  <button onclick="changeMeal()" style="background: grey;">⬅ Change Meal</button>
+</div>
+
+<!-- POPUP -->
+<div id="summaryBox">
+  <h3>Order Summary</h3>
+  <pre id="summaryText"></pre>
+  <h4 id="totalText"></h4>
+
+  <button onclick="goToConfirm()">Confirm Order</button>
+  <button onclick="closeBox()">Close</button>
+</div>
+
+<script>
+function placeOrder() {
+  let items = document.querySelectorAll("li");
+  let total = 0;
+  let summary = "";
+
+  items.forEach(item => {
+    let checkbox = item.querySelector("input[type='checkbox']");
+    let qty = parseInt(item.querySelector("input[type='number']").value);
+    let price = parseInt(checkbox.getAttribute("data-price"));
+
+    if (checkbox.checked) {
+      let name = checkbox.parentElement.innerText.trim();
+      total += qty * price;
+      summary += name + " x " + qty + " = Rs." + (qty * price) + "\n";
+    }
+  });
+
+  if (total === 0) {
+    alert("Select items");
+    return;
+  }
+
+  localStorage.setItem("orderSummary", summary);
+  localStorage.setItem("orderTotal", total);
+
+  document.getElementById("summaryText").innerText = summary;
+  document.getElementById("totalText").innerText = "Total = Rs." + total;
+  document.getElementById("summaryBox").style.display = "block";
+}
+
+function closeBox() {
+  document.getElementById("summaryBox").style.display = "none";
+}
+
+function goToConfirm() {
+  window.location.href = "confirm.html";
+}
+
+function changeMeal() {
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Breakfast Menu</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(to right, #1e1e2f, #2c3e50);
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .menu-box {
+      width: 50%;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: orange;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      display: grid;
+      grid-template-columns: 1fr 80px 80px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .price {
+      text-align: center;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+      text-align: center;
+    }
+
+    .actions {
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background: orange;
+      color: white;
+      cursor: pointer;
+    }
+
+    #summaryBox {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Breakfast Menu 🍳</h1>
+
+<div class="container">
+
+  <!-- LEFT -->
+  <div class="menu-box">
+    <h2>BREAKFAST</h2>
+    <ul>
+      <li><label><input type="checkbox" data-price="15"> Idli</label><span class="price">Rs.15</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="45"> Dosai</label><span class="price">Rs.45</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="30"> Poori</label><span class="price">Rs.30</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="50"> Chappathi</label><span class="price">Rs.50</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="60"> Pongal</label><span class="price">Rs.60</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="35"> Idiyappam</label><span class="price">Rs.35</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="40"> Oothapam</label><span class="price">Rs.40</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="35"> Upma</label><span class="price">Rs.35</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="35"> Noodles</label><span class="price">Rs.35</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="35"> Oats</label><span class="price">Rs.35</span><input type="number" min="1" max="50" value="1"></li>
+    </ul>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="menu-box">
+    <h2>STARTERS</h2>
+    <ul>
+      <li><label><input type="checkbox" data-price="10"> Uluntha Vadai</label><span class="price">Rs.10</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="10"> Paruppu Vadai</label><span class="price">Rs.10</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="10"> Onion Vadai</label><span class="price">Rs.10</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="30"> Bonda</label><span class="price">Rs.30</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="10"> Kesari</label><span class="price">Rs.10</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="15"> Omelet</label><span class="price">Rs.15</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="35"> Vegetable Soup</label><span class="price">Rs.35</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="45"> Mushroom Soup</label><span class="price">Rs.45</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="55"> Tomato Soup</label><span class="price">Rs.55</span><input type="number" min="1" max="50" value="1"></li>
+      <li><label><input type="checkbox" data-price="40"> Sweetcorn Soup</label><span class="price">Rs.40</span><input type="number" min="1" max="50" value="1"></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="actions">
+  <button onclick="placeOrder()">Order Now</button>
+  <button onclick="location.reload()">Clear</button>
+  <br>
+  <button onclick="goHome()" style="background: grey;">⬅ Change Meal</button>
+</div>
+
+<!-- POPUP -->
+<div id="summaryBox">
+  <h3>Order Summary</h3>
+  <pre id="summaryText"></pre>
+  <h4 id="totalText"></h4>
+
+  <button onclick="goToConfirm()">Confirm Order</button>
+  <button onclick="closeBox()">Close</button>
+</div>
+
+<script>
+function placeOrder() {
+  let items = document.querySelectorAll("li");
+  let total = 0;
+  let summary = "";
+
+  items.forEach(item => {
+    let checkbox = item.querySelector("input[type='checkbox']");
+    let qty = parseInt(item.querySelector("input[type='number']").value);
+    let price = parseInt(checkbox.getAttribute("data-price"));
+
+    if (checkbox.checked) {
+      let itemName = checkbox.parentElement.innerText.trim();
+      let itemTotal = qty * price;
+      total += itemTotal;
+      summary += itemName + " x " + qty + " = Rs." + itemTotal + "\n";
+    }
+  });
+
+  if (total === 0) {
+    alert("Please select at least one item");
+    return;
+  }
+
+  localStorage.setItem("orderSummary", summary);
+  localStorage.setItem("orderTotal", total);
+
+  document.getElementById("summaryText").innerText = summary;
+  document.getElementById("totalText").innerText = "Total = Rs." + total;
+  document.getElementById("summaryBox").style.display = "block";
+}
+
+function goToConfirm() {
+  window.location.href = "confirm.html";
+}
+
+function closeBox() {
+  document.getElementById("summaryBox").style.display = "none";
+}
+
+function goHome() {
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

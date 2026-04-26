@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1e1e2f, #2c3e50);
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 60px;
+        }
+
+        table {
+            margin: auto;
+            margin-top: 30px;
+            background-color: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        input {
+            padding: 6px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: orange;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkorange;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Login to continue your delicious journey 😊</h1>
+
+<form id="orderForm">
+    <table>
+        <tr>
+            <td>Customer Name</td>
+            <td><input type="text" id="name" required></td>
+        </tr>
+
+        <tr>
+            <td>Phone Number</td>
+            <td>
+                <input type="tel" id="phone"
+                pattern="[0-9]{10}" maxlength="10"
+                title="Enter 10 digit phone number"
+                required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Diners</td>
+            <td>
+                <input type="number" id="diners"
+                min="1" max="50"
+                title="Max 50 people only"
+                required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Meal Type</td>
+            <td>
+                <input type="radio" name="mealtype" value="Breakfast" required> Breakfast
+                <input type="radio" name="mealtype" value="Lunch"> Lunch
+                <input type="radio" name="mealtype" value="Dinner"> Dinner
+            </td>
+        </tr>
+
+        <tr>
+            <td><button type="submit">Order Now</button></td>
+            <td><button type="reset">Reset</button></td>
+        </tr>
+    </table>
+</form>
+
+<script>
+const form = document.getElementById("orderForm");
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const diners = document.getElementById("diners").value;
+
+    const selectedMeal = document.querySelector('input[name="mealtype"]:checked');
+
+    // Extra validation (safety)
+    if (phone.length !== 10) {
+        alert("Phone number must be 10 digits");
+        return;
+    }
+
+    if (diners <= 0 || diners > 50) {
+        alert("Diners must be between 1 and 50");
+        return;
+    }
+
+    if (!selectedMeal) {
+        alert("Please select a meal type");
+        return;
+    }
+
+    const mealtype = selectedMeal.value;
+
+    // Save data
+    const userDetails = {
+        name,
+        phone,
+        diners,
+        mealtype
+    };
+
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+
+    // Redirect
+    if (mealtype === "Breakfast") {
+        window.location.href = "breakfast.html";
+    } else if (mealtype === "Lunch") {
+        window.location.href = "lunch.html";
+    } else {
+        window.location.href = "dinner.html";
+    }
+});
+</script>
+
+</body>
+</html>

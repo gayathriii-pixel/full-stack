@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Confirmation</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(to right, #1e1e2f, #2c3e50);
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      padding: 30px;
+      gap: 30px;
+    }
+
+    .left {
+      width: 60%;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .right {
+      width: 40%;
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+      color: orange;
+    }
+
+    pre {
+      background: black;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+
+    .total {
+      font-size: 20px;
+      margin-top: 10px;
+      color: lightgreen;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background: orange;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- LEFT -->
+  <div class="left">
+    <h2>Order Confirmation 🧾</h2>
+
+    <pre id="orderText"></pre>
+    <div class="total" id="totalText"></div>
+
+    <h3>Select Payment Method</h3>
+    <input type="radio" name="pay" value="COD"> Cash on Delivery 💵<br>
+    <input type="radio" name="pay" value="GPay"> GPay 📱<br>
+
+    <button onclick="confirmOrder()">Confirm Order</button>
+    <button onclick="goBack()">⬅ Back</button>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <h2>Chef 👨‍🍳</h2>
+    <p>Your food will be served within half an hour...⚡</p>
+    <p>Freshly made. Carefully packed.  Soon at your door💓</p>
+  </div>
+
+</div>
+
+<script>
+
+/// ✅ LOAD DATA SAFELY
+let summary = localStorage.getItem("orderSummary");
+let total = Number(localStorage.getItem("orderTotal"));
+
+if (!summary || summary.trim() === "") {
+  summary = "No items selected";
+}
+
+if (!total || isNaN(total)) {
+  total = 0;
+}
+
+document.getElementById("orderText").innerText = summary;
+document.getElementById("totalText").innerText = "Total = Rs." + total;
+
+
+/// ✅ CONFIRM BUTTON LOGIC (4 CASES)
+function confirmOrder() {
+
+  let pay = document.querySelector('input[name="pay"]:checked');
+
+  // ❌ Case 1: No payment selected
+  if (!pay) {
+    alert("Please select payment method");
+    return;
+  }
+
+  // 💵 Case 2: COD
+  if (pay.value === "COD") {
+    localStorage.setItem("finalAmount", total);
+    window.location.href = "rating.html";
+  }
+
+  // 📱 Case 3: GPay
+  if (pay.value === "GPay") {
+    localStorage.setItem("finalAmount", total);
+    window.location.href = "gpay.html";
+  }
+}
+
+
+/// ⬅ Back
+function goBack() {
+  window.history.back();
+}
+
+</script>
+
+</body>
+</html>
